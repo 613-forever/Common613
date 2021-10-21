@@ -11,7 +11,7 @@ namespace common613 {
 namespace filesystem = std::filesystem;
 }
 #else
-# include <boost/filesystem>
+# include <boost/filesystem.hpp>
 namespace common613 {
 namespace filesystem = boost::filesystem;
 }

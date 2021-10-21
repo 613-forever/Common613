@@ -11,7 +11,7 @@ cmake_policy(SET CMP0074 NEW)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
-find_package(Boost REQUIRED COMPONENTS log filesystem)
+find_package(Boost REQUIRED COMPONENTS log log_setup filesystem)
 
 find_package(fmt REQUIRED)
 
@@ -28,13 +28,14 @@ include(GoogleTest)
 include_directories("./include")
 
 add_library(${PROJECT_NAME} INTERFACE)
+target_compile_definitions(${PROJECT_NAME} INTERFACE -DBOOST_LOG_DYN_LINK)
 target_include_directories(${PROJECT_NAME} INTERFACE .)
 target_include_directories(${PROJECT_NAME} INTERFACE
         ${Boost_INCLUDE_DIRS}
         ${fmt_INCLUDE_DIRS}
 )
 target_link_libraries(${PROJECT_NAME} INTERFACE
-        Boost::log
+        Boost::log Boost::log_setup
         Boost::filesystem
         ${fmt_LIBRARIES}
 )
@@ -47,7 +48,7 @@ if (COMMON613_STACKTRACE_DEBUG)
             target_link_libraries(${PROJECT_NAME} INTERFACE Boost::stacktrace_windbg)
             if (MINGW)
                 find_package(dbgeng REQUIRED)
-                target_link_libraries(${PROJECT_NAME} ${dbgeng_LIBRARIES})
+                target_link_libraries(${PROJECT_NAME} INTERFACE ${dbgeng_LIBRARIES})
             endif(MINGW)
         else(Boost_stacktrace_windbg_FOUND)
             message("boost_stacktrace_windbg is not found, skip stacktrace")
@@ -63,7 +64,7 @@ if (COMMON613_STACKTRACE_DEBUG)
     endif(WIN32)
 endif(COMMON613_STACKTRACE_DEBUG)
 
-add_executable(${PROJECT_NAME}_test test/assert_test.cpp
+add_executable(${PROJECT_NAME}_test test/assert_test.cpp test/file_utils_test.cpp
         include/common613/compat/cpp17.h include/common613/compat/file_system.h
         include/common613/assert.h include/common613/file_utils.h include/common613/memory.h include/common613/struct_size_check.h)
 target_include_directories(${PROJECT_NAME}_test PUBLIC ${GTEST_INCLUDE_DIRS})

@@ -64,7 +64,7 @@ COMMON613_NODISCARD inline size_t read(const File& file, T* buffer, std::nothrow
 /// @brief Reads @a count data units from @a file, each filling @a *buffer.
 template <class T>
 inline void read(const File& file, T* buffer, size_t count = 1) {
-  size_t countRead = std::fread(buffer, sizeof(T), count, file.get());
+  size_t countRead = read(file, buffer, std::nothrow, count);
   COMMON613_REQUIRE(countRead == count,
                           "Failed to read required count. Read: {}. Required: {}. Error code: {}.",
                           countRead, count, std::ferror(file.get()));
@@ -79,7 +79,7 @@ COMMON613_NODISCARD inline size_t write(const File& file, T* buffer, std::nothro
 /// @brief Writes @a count data units to @a file, each sharing the size of @a &buffer.
 template <class T>
 inline void write(const File& file, T* buffer, size_t count = 1) {
-  size_t countRead = std::fwrite(buffer, sizeof(T), count, file.get());
+  size_t countRead = write(file, buffer, std::nothrow, count);
   COMMON613_REQUIRE(countRead == count,
                           "Failed to write required count. Read: {}. Required: {}. Error code: {}.",
                           countRead, count, std::ferror(file.get()));
