@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021 613_forever
+
 #pragma once
 #ifndef COMMON613_STRUCT_SIZE_CHECK_H
 #define COMMON613_STRUCT_SIZE_CHECK_H

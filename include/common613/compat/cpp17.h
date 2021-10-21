@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021 613_forever
+
 #pragma once
 #ifndef COMMON613_COMPAT_CPP17_H
 #define COMMON613_COMPAT_CPP17_H

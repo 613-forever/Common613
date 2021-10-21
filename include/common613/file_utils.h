@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021 613_forever
+
 #pragma once
 #ifndef COMMON613_FILE_UTILS_H
 #define COMMON613_FILE_UTILS_H
@@ -52,11 +55,13 @@ COMMON613_NODISCARD inline File open(const filesystem::path& filePath, const cha
   }
 }
 
+/// @override
 template <class T>
 COMMON613_NODISCARD inline size_t read(const File& file, T* buffer, std::nothrow_t, size_t count = 1) {
   return std::fread(buffer, sizeof(T), count, file.get());
 }
 
+/// @brief Reads @a count data units from @a file, each filling @a *buffer.
 template <class T>
 inline void read(const File& file, T* buffer, size_t count = 1) {
   size_t countRead = std::fread(buffer, sizeof(T), count, file.get());
@@ -65,11 +70,13 @@ inline void read(const File& file, T* buffer, size_t count = 1) {
                           countRead, count, std::ferror(file.get()));
 }
 
+/// @override
 template <class T>
 COMMON613_NODISCARD inline size_t write(const File& file, T* buffer, std::nothrow_t, size_t count = 1) {
   return std::fwrite(buffer, sizeof(T), count, file.get());
 }
 
+/// @brief Writes @a count data units to @a file, each sharing the size of @a &buffer.
 template <class T>
 inline void write(const File& file, T* buffer, size_t count = 1) {
   size_t countRead = std::fwrite(buffer, sizeof(T), count, file.get());
@@ -78,11 +85,13 @@ inline void write(const File& file, T* buffer, size_t count = 1) {
                           countRead, count, std::ferror(file.get()));
 }
 
+/// @brief Calls fseek, with result checked.
 inline void seek(const File& file, long offset, int orig) {
   int ret = std::fseek(file.get(), offset, orig);
   COMMON613_REQUIRE(ret == 0, "Failed to seek in file. Error code: {}.", std::ferror(file.get()));
 }
 
+/// @brief Reads all data from @file.
 COMMON613_NODISCARD inline Memory readAll(const File& file) {
   FILE* pFile = file.get();
   seek(file, 0, SEEK_END);
@@ -93,6 +102,7 @@ COMMON613_NODISCARD inline Memory readAll(const File& file) {
   return buffer;
 }
 
+/// @brief Calls feof.
 COMMON613_NODISCARD inline bool eof(const File& file) {
   return std::feof(file.get());
 }
