@@ -45,6 +45,7 @@ endif(COMMON613_STACKTRACE_DEBUG)
 
 find_path(Common613_INCLUDE_DIR
     NAMES
+        common613/arith_utils.h
         common613/assertion.h
         common613/common.h
         common613/compat/cpp17.h

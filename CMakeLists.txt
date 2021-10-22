@@ -64,9 +64,12 @@ if (COMMON613_STACKTRACE_DEBUG)
     endif(WIN32)
 endif(COMMON613_STACKTRACE_DEBUG)
 
-add_executable(${PROJECT_NAME}_test test/assert_test.cpp test/file_utils_test.cpp
+add_executable(${PROJECT_NAME}_test
+        test/assert_test.cpp test/file_utils_test.cpp test/arith_utils_test.cpp
         include/common613/compat/cpp17.h include/common613/compat/file_system.h
-        include/common613/assert.h include/common613/file_utils.h include/common613/memory.h include/common613/struct_size_check.h)
+        include/common613/assert.h include/common613/file_utils.h
+        include/common613/memory.h include/common613/struct_size_check.h
+        include/common613/arith_utils.h)
 target_include_directories(${PROJECT_NAME}_test PUBLIC ${GTEST_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME}_test PUBLIC GTest::GTest GTest::Main ${PROJECT_NAME})
 gtest_discover_tests(${PROJECT_NAME}_test)

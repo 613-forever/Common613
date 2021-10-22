@@ -1,5 +1,7 @@
-#include <gtest/gtest.h>
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2021 613_forever
 
+#include <gtest/gtest.h>
 #include <common613/assert.h>
 
 TEST(Assertions, Fatal) {

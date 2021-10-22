@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2021 613_forever
 
-#include <common613/file_utils.h>
-
 #include <gtest/gtest.h>
+#include <common613/file_utils.h>
 
 using namespace std;
 using namespace common613::file;
