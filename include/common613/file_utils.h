@@ -30,6 +30,12 @@ struct Closer {
 /// @brief RAII-style wrapper for FILE*.
 using File = std::unique_ptr<FILE, Closer>;
 
+/// @overload
+COMMON613_NODISCARD inline File open(const char* filePath, const char* mode, std::nothrow_t) {
+  std::FILE* file = std::fopen(filePath, mode);
+  return File(file);
+}
+
 /// @brief Opens a file and wrap it in RAII style.
 COMMON613_NODISCARD inline File open(const char* filePath, const char* mode) {
   std::FILE* file = std::fopen(filePath, mode);
