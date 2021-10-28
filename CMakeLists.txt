@@ -16,10 +16,9 @@ find_package(Boost REQUIRED COMPONENTS log log_setup filesystem)
 find_package(fmt REQUIRED)
 
 if (MSVC)
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS -DNOMINMAX -DBOOST_STACKTRACE_USE_WINDBG)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS -DNOMINMAX)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /utf-8")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
-    set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -Xcompiler=\"${CMAKE_CXX_FLAGS}\"")
 endif (MSVC)
 
 find_package(GTest REQUIRED)
@@ -29,10 +28,6 @@ include_directories("./include")
 
 add_library(${PROJECT_NAME} INTERFACE)
 target_compile_definitions(${PROJECT_NAME} INTERFACE -DBOOST_LOG_DYN_LINK)
-target_include_directories(${PROJECT_NAME} INTERFACE .)
-target_include_directories(${PROJECT_NAME} INTERFACE
-        ${Boost_INCLUDE_DIRS}
-)
 target_link_libraries(${PROJECT_NAME} INTERFACE
         Boost::log Boost::log_setup
         Boost::filesystem

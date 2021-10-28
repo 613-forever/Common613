@@ -59,7 +59,7 @@ find_path(Common613_INCLUDE_DIR
     )
 
 set(Common613_INCLUDE_DIRS ${Common613_INCLUDE_DIR})
-set(Common613_LIBRARIES fmt::fmt ${COMMON613_BOOST_LIBRARIES})
+set(Common613_LIBRARIES ${COMMON613_fmt_LIBRARIES} ${COMMON613_BOOST_LIBRARIES})
 
 find_package_handle_standard_args(Common613 DEFAULT_MSG
     Common613_INCLUDE_DIR)

@@ -61,7 +61,7 @@ struct WcstombsWrapper{
 
 template <>
 struct WcstombsWrapper<wchar_t>{
-  inline static size_t call(char* buffer, const wchar_t* path, int bufferSize) {
+  inline static size_t call(char* buffer, const wchar_t* path, size_t bufferSize) {
     return std::wcstombs(buffer, path, bufferSize);
   }
 };
