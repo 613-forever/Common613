@@ -6,15 +6,18 @@
 
 using namespace std;
 using namespace common613::file;
+using common613::filesystem::path;
 
 TEST(FileUtilsOpennerTest, open) {
   string filename = tmpnam(nullptr);
   auto openR = [&filename]{ File file = open(filename, "r"); };
+  auto openRNT = [&filename]{ File file = open(filename, "r", std::nothrow); };
   ASSERT_ANY_THROW(openR());
+  ASSERT_NO_FATAL_FAILURE(openRNT());
   auto openW = [&filename]{ File file = open(filename, "w"); };
   ASSERT_NO_FATAL_FAILURE(openW());
   ASSERT_NO_FATAL_FAILURE(openR());
-  auto openPath = [&filename]{ File file = open(filesystem::path(filename), "r"); };
+  auto openPath = [&filename]{ File file = open(path(filename), "r"); };
   ASSERT_NO_FATAL_FAILURE(openPath());
   remove(filename.c_str());
 }

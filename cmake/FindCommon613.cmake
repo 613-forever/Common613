@@ -11,6 +11,8 @@
 include(FindPackageHandleStandardArgs)
 
 find_package(fmt REQUIRED)
+set(COMMON613_fmt_LIBRARIES fmt::fmt)
+
 add_definitions(-DBOOST_LOG_DYN_LINK)
 find_package(Boost REQUIRED COMPONENTS log log_setup)
 set(COMMON613_BOOST_LIBRARIES Boost::log Boost::log_setup Boost::boost)
@@ -56,8 +58,8 @@ find_path(Common613_INCLUDE_DIR
         ${Common613_ROOT_DIR}/include/
     )
 
-set(Common613_INCLUDE_DIRS ${fmt_INCLUDE_DIR} ${Common613_INCLUDE_DIR})
-set(Common613_LIBRARIES ${fmt_LIBRARIES} ${COMMON613_BOOST_LIBRARIES})
+set(Common613_INCLUDE_DIRS ${Common613_INCLUDE_DIR})
+set(Common613_LIBRARIES fmt::fmt ${COMMON613_BOOST_LIBRARIES})
 
 find_package_handle_standard_args(Common613 DEFAULT_MSG
     Common613_INCLUDE_DIR)

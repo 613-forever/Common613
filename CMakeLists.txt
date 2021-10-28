@@ -32,15 +32,14 @@ target_compile_definitions(${PROJECT_NAME} INTERFACE -DBOOST_LOG_DYN_LINK)
 target_include_directories(${PROJECT_NAME} INTERFACE .)
 target_include_directories(${PROJECT_NAME} INTERFACE
         ${Boost_INCLUDE_DIRS}
-        ${fmt_INCLUDE_DIRS}
 )
 target_link_libraries(${PROJECT_NAME} INTERFACE
         Boost::log Boost::log_setup
         Boost::filesystem
-        ${fmt_LIBRARIES}
+        fmt::fmt
 )
 if (COMMON613_STACKTRACE_DEBUG)
-    if (WIN32)
+#    if (WIN32)
         find_package(Boost COMPONENTS stacktrace_windbg)
         if (Boost_stacktrace_windbg_FOUND)
             add_definitions(-DCOMMON613_STACKTRACE_DEBUG=1)
@@ -53,15 +52,15 @@ if (COMMON613_STACKTRACE_DEBUG)
         else(Boost_stacktrace_windbg_FOUND)
             message("boost_stacktrace_windbg is not found, skip stacktrace")
         endif(Boost_stacktrace_windbg_FOUND)
-    else(WIN32)
-        find_package(Boost COMPONENTS stacktrace_basic)
-        if (Boost_stacktrace_basic_FOUND)
-            add_definitions(-DCOMMON613_STACKTRACE_DEBUG=1)
-            target_link_libraries(${PROJECT_NAME} INTERFACE Boost::stacktrace_basic)
-        else(Boost_stacktrace_basic_FOUND)
-            message("boost_stacktrace_basic is not found, skip stacktrace")
-        endif(Boost_stacktrace_basic_FOUND)
-    endif(WIN32)
+#    else(WIN32)
+#        find_package(Boost COMPONENTS stacktrace_basic)
+#        if (Boost_stacktrace_basic_FOUND)
+#            add_definitions(-DCOMMON613_STACKTRACE_DEBUG=1)
+#            target_link_libraries(${PROJECT_NAME} INTERFACE Boost::stacktrace_basic)
+#        else(Boost_stacktrace_basic_FOUND)
+#            message("boost_stacktrace_basic is not found, skip stacktrace")
+#        endif(Boost_stacktrace_basic_FOUND)
+#    endif(WIN32)
 endif(COMMON613_STACKTRACE_DEBUG)
 
 add_executable(${PROJECT_NAME}_test

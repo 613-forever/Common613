@@ -38,9 +38,14 @@ COMMON613_NODISCARD inline File open(const char* filePath, const char* mode, std
 
 /// @brief Opens a file and wrap it in RAII style.
 COMMON613_NODISCARD inline File open(const char* filePath, const char* mode) {
-  std::FILE* file = std::fopen(filePath, mode);
+  File file = open(filePath, mode, std::nothrow);
   COMMON613_REQUIRE(file != nullptr, "Failed to open file: {}. Please check it again.", filePath);
-  return File(file);
+  return file;
+}
+
+/// @overload
+COMMON613_NODISCARD inline File open(const std::string& filePath, const char* mode, std::nothrow_t) {
+  return open(filePath.c_str(), mode, std::nothrow);
 }
 
 /// @overload
@@ -48,17 +53,38 @@ COMMON613_NODISCARD inline File open(const std::string& filePath, const char* mo
   return open(filePath.c_str(), mode);
 }
 
+namespace detail {
+template <class TChar>
+struct WcstombsWrapper{
+  constexpr static size_t call(char* buffer, const TChar* path, size_t bufferSize) { return 0; }
+};
+
+template <>
+struct WcstombsWrapper<wchar_t>{
+  inline static size_t call(char* buffer, const wchar_t* path, int bufferSize) {
+    return std::wcstombs(buffer, path, bufferSize);
+  }
+};
+}
+
 /// @overload
-COMMON613_NODISCARD inline File open(const filesystem::path& filePath, const char* mode) {
+COMMON613_NODISCARD inline File open(const filesystem::path& filePath, const char* mode, std::nothrow_t) {
   COMMON613_CONSTEXPR_IF(std::is_same<filesystem::path::value_type, wchar_t>::value) {
     auto size = filePath.string().size() * 3;
     std::vector<char> buffer(size + 1);
-    auto ret = std::wcstombs(buffer.data(), filePath.c_str(), size + 1);
+    auto ret = detail::WcstombsWrapper<filesystem::path::value_type>::call(buffer.data(), filePath.c_str(), size + 1);
     COMMON613_REQUIRE(ret != -1, "Path conversion error.");
-    return open(buffer.data(), mode);
+    return open(buffer.data(), mode, std::nothrow);
   } else {
-    return open(filePath.c_str(), mode);
+    return open(filePath.c_str(), mode, std::nothrow);
   }
+}
+
+/// @overload
+COMMON613_NODISCARD inline File open(const filesystem::path& filePath, const char* mode) {
+  File file = open(filePath, mode, std::nothrow);
+  COMMON613_REQUIRE(file != nullptr, "Failed to open file: {}. Please check it again.");
+  return file;
 }
 
 /// @override
