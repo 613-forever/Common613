@@ -13,8 +13,10 @@ namespace common613 {
 template <class ToType, class FromType>
 COMMON613_NODISCARD
 inline ToType checked_cast(FromType i) {
-  COMMON613_REQUIRE(i <= std::numeric_limits<ToType>::max(), "Overflow for coordinates: {}.", i);
-  COMMON613_REQUIRE(i >= std::numeric_limits<ToType>::min(), "Underflow for coordinates: {}.", i);
+  COMMON613_REQUIRE(i <= std::numeric_limits<ToType>::max(),
+                    "Overflow for coordinates: {} > {}.", i, std::numeric_limits<ToType>::max());
+  COMMON613_REQUIRE((!std::is_signed<FromType>::value || i >= std::numeric_limits<ToType>::min()),
+                    "Underflow for coordinates: {} < {}.", i, std::numeric_limits<ToType>::min());
   return static_cast<ToType>(i);
 }
 
