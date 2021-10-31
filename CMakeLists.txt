@@ -11,6 +11,10 @@ cmake_policy(SET CMP0074 NEW)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
+if (WIN32)
+    set(Boost_USE_STATIC_LIBS OFF)
+    add_definitions(-DBOOST_ALL_NO_LIB -DBOOST_LOG_DYN_LINK)
+endif ()
 find_package(Boost REQUIRED COMPONENTS log log_setup filesystem)
 
 find_package(fmt REQUIRED)
