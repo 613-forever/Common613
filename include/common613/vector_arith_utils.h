@@ -2,8 +2,8 @@
 // Copyright (c) 2021 613_forever
 
 #pragma once
-#ifndef DIALOGVIDEOGENERATOR_POS_ARITH_H
-#define DIALOGVIDEOGENERATOR_POS_ARITH_H
+#ifndef COMMON613_VECTOR_ARITH_UTILS_H
+#define COMMON613_VECTOR_ARITH_UTILS_H
 
 #include <functional>
 #include <vector>
@@ -117,4 +117,4 @@ inline bool operator>=(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rh
 
 }
 
-#endif //DIALOGVIDEOGENERATOR_POS_ARITH_H
+#endif //COMMON613_VECTOR_ARITH_UTILS_H
