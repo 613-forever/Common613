@@ -25,7 +25,7 @@ constexpr bool equalHelper(const ArrNi<A, IntT, N>& lhs, const ArrNi<B, IntT, N>
 }
 
 /// @internal
-template <bool A, class IntT, int N, class UnaryFunc, std::size_t... IND>
+template <bool A, class IntT, std::size_t N, class UnaryFunc, std::size_t... IND>
 COMMON613_NODISCARD
 constexpr ArrNi<A, IntT, N> unaryHelper(const ArrNi<A, IntT, N>& operand, UnaryFunc&& f,
                                         std::integer_sequence<std::size_t, IND...>) {
