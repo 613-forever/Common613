@@ -6,8 +6,10 @@
 #define COMMON613_STRUCT_SIZE_CHECK_H
 
 /// @brief Generates a static const field "size" to mark the size of a struct.
-#define COMMON613_INJECT_SIZE_FIELD(sz) public: constexpr static const std::size_t size = sz
+#define COMMON613_INJECT_SIZE_FIELD(sz) public: constexpr static const std::size_t size = (sz)
 /// @brief Checks if a type has the asserted size of its static const field "size".
-#define COMMON613_CHECK_SIZE(type) static_assert(sizeof(type) == type::size, "Size is incorrect: " #type ".")
+#define COMMON613_CHECK_SIZE(type) static_assert(sizeof(type) == (type::size), "Size is incorrect: " #type ".")
+
+namespace common613 {}
 
 #endif //COMMON613_STRUCT_SIZE_CHECK_H

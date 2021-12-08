@@ -15,7 +15,7 @@ TEST(ArithUtils, Common) {
 TEST(ArithUtils, Bad) {
   long long l = 400'0000'0000LL;
   int i;
-  ASSERT_ANY_THROW(i = checked_cast<int>(l));
+  EXPECT_ANY_THROW(i = checked_cast<int>(l));
   l = -400'0000'0000LL;
-  ASSERT_ANY_THROW(i = checked_cast<int>(l));
+  EXPECT_ANY_THROW(i = checked_cast<int>(l));
 }
