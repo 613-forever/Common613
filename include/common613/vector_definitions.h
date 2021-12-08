@@ -8,7 +8,7 @@
 #include <array>
 #include <cstdint>
 #include <common613/struct_size_check.h>
-#include <common613/arith_utils.h>
+#include <common613/checked_cast.h>
 #include <common613/compat/cpp17.h>
 
 namespace common613 {

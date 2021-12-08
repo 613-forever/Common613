@@ -2,7 +2,7 @@
 // Copyright (c) 2021 613_forever
 
 #include <gtest/gtest.h>
-#include <common613/arith_utils.h>
+#include <common613/checked_cast.h>
 using common613::checked_cast;
 
 TEST(ArithUtils, Common) {

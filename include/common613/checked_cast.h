@@ -2,8 +2,8 @@
 // Copyright (c) 2021 613_forever
 
 #pragma once
-#ifndef COMMON613_ARITH_UTILS_H
-#define COMMON613_ARITH_UTILS_H
+#ifndef COMMON613_CHECKED_CAST_H
+#define COMMON613_CHECKED_CAST_H
 
 #include <common613/assert.h>
 #include <common613/compat/cpp17.h>
@@ -22,4 +22,4 @@ constexpr ToType checked_cast(FromType i) {
 
 }
 
-#endif //! COMMON613_ARITH_UTILS_H
+#endif //COMMON613_CHECKED_CAST_H

@@ -8,7 +8,7 @@
 #include <functional>
 #include <vector>
 #include <common613/assert.h>
-#include <common613/arith_utils.h>
+#include <common613/checked_cast.h>
 #include <common613/compat/cpp17.h>
 #include <common613/vector_definitions.h>
 
