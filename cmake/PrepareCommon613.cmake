@@ -39,10 +39,10 @@ set(Common613_HEADERS
         common613/compat/cpp17.h
         common613/compat/file_system.h
         common613/assert.h
+        common613/checked_cast.h
         common613/file_utils.h
         common613/memory.h
         common613/struct_size_check.h
-        common613/arith_utils.h
         common613/vector_arith_utils.h
         common613/vector_definitions.h
 )

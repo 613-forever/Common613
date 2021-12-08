@@ -17,18 +17,18 @@ namespace internal {
 
 /// @internal
 // workaround for std::is_integral<IntT2>::value && ...
-template <class... Types>
-struct AllIntegralHelper {};
+template <bool... Values>
+struct All {};
 
 /// @internal
-template <class FirstType, class... RemainingTypes>
-struct AllIntegralHelper<FirstType, RemainingTypes...> {
-  constexpr static const bool value = std::is_integral_v<FirstType> && AllIntegralHelper<RemainingTypes...>::value;
+template <bool FirstValue, bool... RemainingValues>
+struct All<FirstValue, RemainingValues...> {
+  constexpr static const bool value = FirstValue && All<RemainingValues...>::value;
 };
 
 /// @internal
 template <>
-struct AllIntegralHelper<> {
+struct All<> {
   constexpr static const bool value = true;
 };
 
@@ -78,7 +78,7 @@ struct ArrNi {
 
   /// @brief Constructs an array of given values.
   template <class... IntT2, class Enabled = std::enable_if_t<N == sizeof...(IntT2) &&
-      internal::AllIntegralHelper<IntT2...>::value>>
+      internal::All<std::is_convertible<IntT2, IntT>::value...>::value>>
   constexpr static ArrNi of(IntT2... integers) {
     return ArrNi{checked_cast<IntT>(integers)...};
   }

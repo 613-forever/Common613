@@ -87,6 +87,34 @@ inline ArrNi<true, IntT, N> operator/(const ArrNi<true, IntT, N>& operand, IntT 
   return internal::unaryHelper(operand, [rhs](IntT i) { return i / rhs; }, std::make_index_sequence<N>{});
 }
 
+/// @related ArrNi
+template <bool A, class IntT>
+COMMON613_NODISCARD
+inline bool operator<(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rhs) {
+  return lhs.arr[0] < rhs.arr[0];
+}
+
+/// @related ArrNi
+template <bool A, class IntT>
+COMMON613_NODISCARD
+inline bool operator<=(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rhs) {
+  return lhs.arr[0] <= rhs.arr[0];
+}
+
+/// @related ArrNi
+template <bool A, class IntT>
+COMMON613_NODISCARD
+inline bool operator>(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rhs) {
+  return lhs.arr[0] > rhs.arr[0];
+}
+
+/// @related ArrNi
+template <bool A, class IntT>
+COMMON613_NODISCARD
+inline bool operator>=(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rhs) {
+  return lhs.arr[0] >= rhs.arr[0];
+}
+
 }
 
 #endif //DIALOGVIDEOGENERATOR_POS_ARITH_H
