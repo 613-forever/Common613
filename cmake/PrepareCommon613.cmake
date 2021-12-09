@@ -51,8 +51,8 @@ find_path(Common613_INCLUDE_DIR
         NAMES
         ${Common613_HEADERS}
         HINTS
-        $<BUILD_INTERFACE:"${Common613_ROOT_DIR};${Common613_ROOT_DIR}/include">
-        $<INSTALL_INTERFACE:"${CMAKE_INSTALL_INCLUDEDIR}">
+        $<BUILD_INTERFACE:${Common613_ROOT_DIR} ${Common613_ROOT_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
         NO_DEFAULT_PATH
         REQUIRED
 )
