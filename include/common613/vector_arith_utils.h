@@ -73,17 +73,17 @@ inline ArrNi<A == B, IntT, N> operator-(const ArrNi<A, IntT, N>& lhs, const ArrN
 }
 
 /// @related ArrNi
-template <class IntT, std::size_t N>
+template <class IntT, class NumT, std::size_t N>
 COMMON613_NODISCARD
-inline ArrNi<true, IntT, N> operator*(const ArrNi<true, IntT, N>& operand, IntT mul) {
+inline ArrNi<true, IntT, N> operator*(const ArrNi<true, IntT, N>& operand, NumT mul) {
   return internal::unaryHelper(operand, [mul](IntT i) { return i * mul; }, std::make_index_sequence<N>{});
 }
 
 /// @related ArrNi
-/// @note Performs integer division.
-template <class IntT, std::size_t N>
+/// @note Performs integer division when @p NumT is integral.
+template <class IntT, class NumT, std::size_t N>
 COMMON613_NODISCARD
-inline ArrNi<true, IntT, N> operator/(const ArrNi<true, IntT, N>& operand, IntT rhs) {
+inline ArrNi<true, IntT, N> operator/(const ArrNi<true, IntT, N>& operand, NumT rhs) {
   return internal::unaryHelper(operand, [rhs](IntT i) { return i / rhs; }, std::make_index_sequence<N>{});
 }
 
