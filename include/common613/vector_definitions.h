@@ -56,23 +56,23 @@ struct ArrNi {
   std::array<IntT, N> arr;
 
   /// @brief Returns the 1st component.
-  COMMON613_NODISCARD IntT x() const { return arr[0]; }
+  COMMON613_NODISCARD constexpr IntT x() const { return arr[0]; }
   /// @overload
-  COMMON613_NODISCARD IntT& x() { return arr[0]; }
+  COMMON613_NODISCARD inline IntT& x() { return arr[0]; }
 
   /// @brief Returns the 2nd component.
   template <class Enabled = std::enable_if<N >= 2>>
-  COMMON613_NODISCARD IntT y() const { return arr[1]; }
+  COMMON613_NODISCARD constexpr IntT y() const { return arr[1]; }
   /// @overload
   template <class Enabled = std::enable_if<N >= 2>>
-  COMMON613_NODISCARD IntT& y() { return arr[1]; }
+  COMMON613_NODISCARD inline IntT& y() { return arr[1]; }
 
   /// @brief Returns the 3rd component.
   template <class Enabled = std::enable_if<N >= 3>>
-  COMMON613_NODISCARD IntT z() const { return arr[2]; }
+  COMMON613_NODISCARD constexpr IntT z() const { return arr[2]; }
   /// @overload
   template <class Enabled = std::enable_if<N >= 3>>
-  COMMON613_NODISCARD IntT& z() { return arr[2]; }
+  COMMON613_NODISCARD inline IntT& z() { return arr[2]; }
 
   COMMON613_INJECT_SIZE_FIELD(sizeof(IntT) * N);
 

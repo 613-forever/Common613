@@ -45,14 +45,14 @@ constexpr ArrNi<RET, IntT, N> binaryHelper(const ArrNi<A, IntT, N>& lhs, const A
 /// @related ArrNi
 template <bool A, class IntT, std::size_t N>
 COMMON613_NODISCARD
-inline bool operator==(const ArrNi<A, IntT, N>& lhs, const ArrNi<A, IntT, N>& rhs) {
+constexpr bool operator==(const ArrNi<A, IntT, N>& lhs, const ArrNi<A, IntT, N>& rhs) {
   return internal::equalHelper(lhs, rhs, std::make_index_sequence<N>{});
 }
 
 /// @related ArrNi
 template <bool A, class IntT, std::size_t N>
 COMMON613_NODISCARD
-inline bool operator!=(const ArrNi<A, IntT, N>& lhs, const ArrNi<A, IntT, N>& rhs) {
+constexpr bool operator!=(const ArrNi<A, IntT, N>& lhs, const ArrNi<A, IntT, N>& rhs) {
   return !(lhs == rhs);
 }
 
@@ -67,7 +67,7 @@ constexpr ArrNi<A && B, IntT, N> operator+(const ArrNi<A, IntT, N>& lhs, const A
 /// @related ArrNi
 template <bool A, bool B, class IntT, std::size_t N>
 COMMON613_NODISCARD
-inline ArrNi<A == B, IntT, N> operator-(const ArrNi<A, IntT, N>& lhs, const ArrNi<B, IntT, N>& rhs) {
+constexpr ArrNi<A == B, IntT, N> operator-(const ArrNi<A, IntT, N>& lhs, const ArrNi<B, IntT, N>& rhs) {
   static_assert(!A || B, "Vector - Point is not allowed.");
   return internal::binaryHelper<A == B>(lhs, rhs, std::minus<>(), std::make_index_sequence<N>{});
 }
@@ -75,7 +75,7 @@ inline ArrNi<A == B, IntT, N> operator-(const ArrNi<A, IntT, N>& lhs, const ArrN
 /// @related ArrNi
 template <class IntT, class NumT, std::size_t N>
 COMMON613_NODISCARD
-inline ArrNi<true, IntT, N> operator*(const ArrNi<true, IntT, N>& operand, NumT mul) {
+constexpr ArrNi<true, IntT, N> operator*(const ArrNi<true, IntT, N>& operand, NumT mul) {
   return internal::unaryHelper(operand, [mul](IntT i) { return i * mul; }, std::make_index_sequence<N>{});
 }
 
@@ -83,35 +83,35 @@ inline ArrNi<true, IntT, N> operator*(const ArrNi<true, IntT, N>& operand, NumT 
 /// @note Performs integer division when @p NumT is integral.
 template <class IntT, class NumT, std::size_t N>
 COMMON613_NODISCARD
-inline ArrNi<true, IntT, N> operator/(const ArrNi<true, IntT, N>& operand, NumT rhs) {
+constexpr ArrNi<true, IntT, N> operator/(const ArrNi<true, IntT, N>& operand, NumT rhs) {
   return internal::unaryHelper(operand, [rhs](IntT i) { return i / rhs; }, std::make_index_sequence<N>{});
 }
 
 /// @related ArrNi
 template <bool A, class IntT>
 COMMON613_NODISCARD
-inline bool operator<(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rhs) {
+constexpr bool operator<(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rhs) {
   return lhs.arr[0] < rhs.arr[0];
 }
 
 /// @related ArrNi
 template <bool A, class IntT>
 COMMON613_NODISCARD
-inline bool operator<=(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rhs) {
+constexpr bool operator<=(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rhs) {
   return lhs.arr[0] <= rhs.arr[0];
 }
 
 /// @related ArrNi
 template <bool A, class IntT>
 COMMON613_NODISCARD
-inline bool operator>(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rhs) {
+constexpr bool operator>(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rhs) {
   return lhs.arr[0] > rhs.arr[0];
 }
 
 /// @related ArrNi
 template <bool A, class IntT>
 COMMON613_NODISCARD
-inline bool operator>=(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rhs) {
+constexpr bool operator>=(const ArrNi<A, IntT, 1>& lhs, const ArrNi<A, IntT, 1>& rhs) {
   return lhs.arr[0] >= rhs.arr[0];
 }
 
