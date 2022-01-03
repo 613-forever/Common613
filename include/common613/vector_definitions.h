@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2021 613_forever
 
+/// @file
+/// @brief Definitions for integer vectors.
+
 #pragma once
 #ifndef COMMON613_VECTOR_DEFINITIONS_H
 #define COMMON613_VECTOR_DEFINITIONS_H
@@ -13,29 +16,27 @@
 
 namespace common613 {
 
+/// @cond
 namespace internal {
-
-/// @internal
 // workaround for std::is_integral<IntT2>::value && ...
+// Might be replaced by COMMON613_FOLD_RIGHT, but this is written earlier.
 template <bool... Values>
 struct All {};
 
-/// @internal
 template <bool FirstValue, bool... RemainingValues>
 struct All<FirstValue, RemainingValues...> {
   constexpr static const bool value = FirstValue && All<RemainingValues...>::value;
 };
 
-/// @internal
 template <>
 struct All<> {
   constexpr static const bool value = true;
 };
-
 }
+/// @endcond
 
 /**
- * @brief A class for integral vectors and points with arithmetic operations.
+ * @brief A class for integer vectors and points with arithmetic operations.
  * @tparam Vec Whether it is a vector ( @c true ) or a point ( @c false ).
  * @tparam IntT Underlying int type.
  * @tparam N Dimensions.

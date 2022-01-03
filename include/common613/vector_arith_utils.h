@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2021 613_forever
 
+/// @file
+/// @brief Utilities for integer vector arithmetics, note that they are all integer operations, especially division.
+
 #pragma once
 #ifndef COMMON613_VECTOR_ARITH_UTILS_H
 #define COMMON613_VECTOR_ARITH_UTILS_H
@@ -14,9 +17,9 @@
 
 namespace common613 {
 
+/// @cond
 namespace internal {
 
-/// @internal
 template <bool A, bool B, class IntT, std::size_t N, std::size_t... IND>
 COMMON613_NODISCARD
 constexpr bool equalHelper(const ArrNi<A, IntT, N>& lhs, const ArrNi<B, IntT, N>& rhs,
@@ -24,7 +27,6 @@ constexpr bool equalHelper(const ArrNi<A, IntT, N>& lhs, const ArrNi<B, IntT, N>
   return COMMON613_FOLD_RIGHT((lhs.arr[IND] == rhs.arr[IND]), &&);
 }
 
-/// @internal
 template <bool A, class IntT, std::size_t N, class UnaryFunc, std::size_t... IND>
 COMMON613_NODISCARD
 constexpr ArrNi<A, IntT, N> unaryHelper(const ArrNi<A, IntT, N>& operand, UnaryFunc&& f,
@@ -32,7 +34,6 @@ constexpr ArrNi<A, IntT, N> unaryHelper(const ArrNi<A, IntT, N>& operand, UnaryF
   return ArrNi<A, IntT, N>::of(f(operand.arr[IND])...);
 }
 
-/// @internal
 template <bool RET, bool A, bool B, class IntT, std::size_t N, class BinaryFunc, std::size_t... IND>
 COMMON613_NODISCARD
 constexpr ArrNi<RET, IntT, N> binaryHelper(const ArrNi<A, IntT, N>& lhs, const ArrNi<B, IntT, N>& rhs, BinaryFunc&& f,
@@ -41,6 +42,7 @@ constexpr ArrNi<RET, IntT, N> binaryHelper(const ArrNi<A, IntT, N>& lhs, const A
 }
 
 }
+/// @endcond
 
 /// @related ArrNi
 template <bool A, class IntT, std::size_t N>

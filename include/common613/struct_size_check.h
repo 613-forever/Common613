@@ -1,19 +1,22 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2021 613_forever
 
+/// @file
+/// @brief Utilities to check struct sizes and ensure binary compatibility to write raw data.
+
 #pragma once
 #ifndef COMMON613_STRUCT_SIZE_CHECK_H
 #define COMMON613_STRUCT_SIZE_CHECK_H
 
 /// @brief Provides convenient modification for injected field name.
 #define COMMON613_INJECTED_SIZE injected_size
-/// @brief Generates a static const field "size" to mark the size of a struct.
+/// @brief Generates a static const field @ref COMMON613_INJECTED_SIZE to mark the size of a struct.
 #define COMMON613_INJECT_SIZE_FIELD(sz) \
 public: constexpr static const std::size_t COMMON613_INJECTED_SIZE = (sz)
-/// @brief Generates a static const field "size" to mark the size of a struct.
+/// @brief Generates a static const field @ref COMMON613_INJECTED_SIZE to mark the size of a struct.
 #define COMMON613_INHERIT_SIZE_FIELD(parent) \
 public: using parent::COMMON613_INJECTED_SIZE
-/// @brief Checks if a type has the asserted size of its static const field "size".
+/// @brief Checks if a type has the asserted size of its static const field @ref COMMON613_INJECTED_SIZE.
 #define COMMON613_CHECK_SIZE(type) \
 static_assert(sizeof(type) == (type::COMMON613_INJECTED_SIZE), "Size is incorrect: " #type ".")
 /// @brief Checks if a type is a standard-layout type.

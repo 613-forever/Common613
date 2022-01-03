@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2021 613_forever
 
+/// @file
+/// @brief Boost.Log assisted runtime assertion.
+
 #pragma once
 #ifndef COMMON613_ASSERT_H
 #define COMMON613_ASSERT_H
@@ -104,6 +107,11 @@ namespace common613 {}
       throw std::runtime_error(fmt::format(__FILE__ ":" COMMON613_STRINGIZE(__LINE__) " (" #cond ") " fmtStr, ##__VA_ARGS__)); \
     }                                      \
   } while(0)
+#else
+# define COMMON613_FATAL(fmtStr, ...)
+# define COMMON613_REQUIRE(cond, fmtStr, ...)
+# define COMMON613_REQUIRE_SILENT(cond, fmtStr, ...)
+# error "Please specify your dialect for pre-C++20 __VA_OPT__."
 #endif
 
 #endif //COMMON613_ASSERT_H

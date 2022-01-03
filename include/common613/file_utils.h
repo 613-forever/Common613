@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Copyright (c) 2021 613_forever
 
+/// @file
+/// @brief An RAII wrapper for C-style @c FILE -pointer objects.
+
 #pragma once
 #ifndef COMMON613_FILE_UTILS_H
 #define COMMON613_FILE_UTILS_H
@@ -18,14 +21,18 @@
 #include <common613/compat/cpp17.h>
 #include <common613/compat/file_system.h>
 
-namespace common613 { namespace file {
+namespace common613 {
 
-/// @internal
+/// @brief Utilities related to File RAII wrappers.
+namespace file {
+
+/// @cond
 struct Closer {
   void operator()(FILE* p) {
     std::fclose(p);
   }
 };
+/// @endcond
 
 /// @brief RAII-style wrapper for FILE*.
 using File = std::unique_ptr<FILE, Closer>;
@@ -53,7 +60,10 @@ COMMON613_NODISCARD inline File open(const std::string& filePath, const char* mo
   return open(filePath.c_str(), mode);
 }
 
-namespace detail {
+}
+
+/// @cond
+namespace internal {
 template <class TChar>
 struct WcstombsWrapper{
   constexpr static size_t call(char* buffer, const TChar* path, size_t bufferSize) { return 0; }
@@ -66,13 +76,16 @@ struct WcstombsWrapper<wchar_t>{
   }
 };
 }
+/// @endcond
+
+namespace file {
 
 /// @overload
 COMMON613_NODISCARD inline File open(const filesystem::path& filePath, const char* mode, std::nothrow_t) {
   COMMON613_CONSTEXPR_IF(std::is_same<filesystem::path::value_type, wchar_t>::value) {
     auto size = filePath.string().size() * 3;
     std::vector<char> buffer(size + 1);
-    auto ret = detail::WcstombsWrapper<filesystem::path::value_type>::call(buffer.data(), filePath.c_str(), size + 1);
+    auto ret = internal::WcstombsWrapper<filesystem::path::value_type>::call(buffer.data(), filePath.c_str(), size + 1);
     COMMON613_REQUIRE(ret != -1, "Path conversion error.");
     return open(buffer.data(), mode, std::nothrow);
   } else {
@@ -87,13 +100,13 @@ COMMON613_NODISCARD inline File open(const filesystem::path& filePath, const cha
   return file;
 }
 
-/// @override
+/// @overload
 template <class T>
 COMMON613_NODISCARD inline size_t read(const File& file, T* buffer, std::nothrow_t, size_t count = 1) {
   return std::fread(buffer, sizeof(T), count, file.get());
 }
 
-/// @brief Reads @a count data units from @a file, each filling @a *buffer.
+/// @brief Reads @p count data units of type @p T from @p file, and filling @p *buffer.
 template <class T>
 inline void read(const File& file, T* buffer, size_t count = 1) {
   size_t countRead = read(file, buffer, std::nothrow, count);
@@ -102,13 +115,13 @@ inline void read(const File& file, T* buffer, size_t count = 1) {
                           countRead, count, std::ferror(file.get()));
 }
 
-/// @override
+/// @overload
 template <class T>
 COMMON613_NODISCARD inline size_t write(const File& file, T* buffer, std::nothrow_t, size_t count = 1) {
   return std::fwrite(buffer, sizeof(T), count, file.get());
 }
 
-/// @brief Writes @a count data units to @a file, each sharing the size of @a &buffer.
+/// @brief Writes @p count data units to @p file from @p buffer, each sharing the size of @p T .
 template <class T>
 inline void write(const File& file, T* buffer, size_t count = 1) {
   size_t countRead = write(file, buffer, std::nothrow, count);
@@ -117,13 +130,13 @@ inline void write(const File& file, T* buffer, size_t count = 1) {
                           countRead, count, std::ferror(file.get()));
 }
 
-/// @brief Calls fseek, with result checked.
+/// @brief Calls @c fseek, with result checked.
 inline void seek(const File& file, long offset, int orig) {
   int ret = std::fseek(file.get(), offset, orig);
   COMMON613_REQUIRE(ret == 0, "Failed to seek in file. Error code: {}.", std::ferror(file.get()));
 }
 
-/// @brief Reads all data from @file.
+/// @brief Reads all data from @p file .
 COMMON613_NODISCARD inline Memory readAll(const File& file) {
   FILE* pFile = file.get();
   seek(file, 0, SEEK_END);
@@ -134,7 +147,7 @@ COMMON613_NODISCARD inline Memory readAll(const File& file) {
   return buffer;
 }
 
-/// @brief Calls feof.
+/// @brief Calls @c feof.
 COMMON613_NODISCARD inline bool eof(const File& file) {
   return std::feof(file.get());
 }
