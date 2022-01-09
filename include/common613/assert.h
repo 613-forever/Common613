@@ -14,9 +14,12 @@
 
 namespace common613 {}
 
-/// @internal
+/// @cond
 #define COMMON613_STRINGIZE_DETAIL(x) #x
-/// @internal
+/// @endcond
+
+/// @def COMMON613_STRINGIZE
+/// @brief Stringize an identifier.
 #define COMMON613_STRINGIZE(x) COMMON613_STRINGIZE_DETAIL(x)
 
 /// @def COMMON613_TRACE

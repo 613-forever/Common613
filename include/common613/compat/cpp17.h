@@ -41,7 +41,7 @@ namespace common613 {};
 #else
 
 namespace common613 { namespace internal {
-
+/// @cond
 template<class BinaryFunc, class First>
 constexpr auto fold_right(BinaryFunc&&, First&& first) {
     return std::forward<First>(first);
@@ -51,6 +51,7 @@ template<class BinaryFunc, class First, class... Remaining>
 constexpr auto fold_right(BinaryFunc&& f, First&& first, Remaining&&... remaining) {
     return f(std::forward<First>(first), fold_right(std::forward<BinaryFunc>(f), std::forward<Remaining>(remaining)...));
 }
+/// @endcond
 
 } }
 
